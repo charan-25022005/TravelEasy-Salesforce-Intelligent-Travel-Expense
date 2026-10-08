@@ -1,0 +1,19 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Method__c</fullName>
+    <description>Method through which payment was remitted.</description>
+    <externalId>false</externalId>
+    <label>Payment Method</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Direct Deposit / Bank Transfer</fullName><default>true</default><label>Direct Deposit / Bank Transfer</label></value>
+            <value><fullName>Payroll Settlement</fullName><default>false</default><label>Payroll Settlement</label></value>
+            <value><fullName>Corporate Card Offset</fullName><default>false</default><label>Corporate Card Offset</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

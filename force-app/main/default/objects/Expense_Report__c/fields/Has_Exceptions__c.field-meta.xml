@@ -1,0 +1,10 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Has_Exceptions__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates whether any policy or duplicate exceptions exist.</description>
+    <externalId>false</externalId>
+    <label>Has Exceptions</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

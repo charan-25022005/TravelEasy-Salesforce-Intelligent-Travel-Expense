@@ -1,0 +1,12 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bank_Transaction_Id__c</fullName>
+    <description>Bank confirmation or UTR reference number.</description>
+    <externalId>false</externalId>
+    <label>Bank Transaction ID</label>
+    <length>100</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

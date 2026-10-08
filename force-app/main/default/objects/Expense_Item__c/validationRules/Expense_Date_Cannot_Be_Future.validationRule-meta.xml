@@ -1,0 +1,8 @@
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expense_Date_Cannot_Be_Future</fullName>
+    <active>true</active>
+    <description>Expense cannot be recorded on a future date.</description>
+    <errorConditionFormula>Expense_Date__c &gt; TODAY()</errorConditionFormula>
+    <errorDisplayField>Expense_Date__c</errorDisplayField>
+    <errorMessage>Expense Date cannot be in the future.</errorMessage>
+</ValidationRule>

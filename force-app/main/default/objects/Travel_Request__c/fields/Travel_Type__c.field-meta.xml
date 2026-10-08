@@ -1,0 +1,22 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Travel_Type__c</fullName>
+    <description>Category of travel.</description>
+    <externalId>false</externalId>
+    <label>Travel Type</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Domestic</fullName><default>true</default><label>Domestic</label></value>
+            <value><fullName>International</fullName><default>false</default><label>International</label></value>
+            <value><fullName>Client Visit</fullName><default>false</default><label>Client Visit</label></value>
+            <value><fullName>Conference</fullName><default>false</default><label>Conference</label></value>
+            <value><fullName>Internal Training</fullName><default>false</default><label>Internal Training</label></value>
+            <value><fullName>Field Audit</fullName><default>false</default><label>Field Audit</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

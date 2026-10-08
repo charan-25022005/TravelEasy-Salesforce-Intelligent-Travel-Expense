@@ -1,0 +1,20 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_Status__c</fullName>
+    <description>Smart Expense Control validation outcome.</description>
+    <externalId>false</externalId>
+    <label>Validation Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Pending Validation</fullName><default>true</default><label>Pending Validation</label></value>
+            <value><fullName>Passed</fullName><default>false</default><label>Passed</label></value>
+            <value><fullName>Policy Exceptions Detected</fullName><default>false</default><label>Policy Exceptions Detected</label></value>
+            <value><fullName>Verification Required</fullName><default>false</default><label>Verification Required</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,12 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Single_Transaction_Limit__c</fullName>
+    <description>Max allowable single line item expense before triggering exception.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Single Transaction Limit</label>
+    <precision>16</precision>
+    <required>true</required>
+    <scale>2</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

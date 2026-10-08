@@ -1,0 +1,12 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Receipt_Document_Id__c</fullName>
+    <description>Salesforce ContentDocument / ContentVersion ID of uploaded receipt.</description>
+    <externalId>false</externalId>
+    <label>Receipt Document Id</label>
+    <length>18</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

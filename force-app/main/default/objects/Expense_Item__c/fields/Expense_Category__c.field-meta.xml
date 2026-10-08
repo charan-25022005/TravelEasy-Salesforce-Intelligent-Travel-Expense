@@ -1,0 +1,23 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expense_Category__c</fullName>
+    <description>Category of expense item.</description>
+    <externalId>false</externalId>
+    <label>Expense Category</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Airfare</fullName><default>false</default><label>Airfare</label></value>
+            <value><fullName>Hotel / Lodging</fullName><default>false</default><label>Hotel / Lodging</label></value>
+            <value><fullName>Meals &amp; Food</fullName><default>true</default><label>Meals &amp; Food</label></value>
+            <value><fullName>Ground Transportation / Taxi</fullName><default>false</default><label>Ground Transportation / Taxi</label></value>
+            <value><fullName>Client Entertainment</fullName><default>false</default><label>Client Entertainment</label></value>
+            <value><fullName>Fuel</fullName><default>false</default><label>Fuel</label></value>
+            <value><fullName>Incidentals / Miscellaneous</fullName><default>false</default><label>Incidentals / Miscellaneous</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

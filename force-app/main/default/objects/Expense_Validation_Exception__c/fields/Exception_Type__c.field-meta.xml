@@ -1,0 +1,22 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Type__c</fullName>
+    <description>Category of policy exception or anomaly.</description>
+    <externalId>false</externalId>
+    <label>Exception Type</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Policy Limit Exceeded</fullName><default>false</default><label>Policy Limit Exceeded</label></value>
+            <value><fullName>Missing Receipt</fullName><default>false</default><label>Missing Receipt</label></value>
+            <value><fullName>Potential Duplicate</fullName><default>false</default><label>Potential Duplicate</label></value>
+            <value><fullName>Budget Overrun</fullName><default>false</default><label>Budget Overrun</label></value>
+            <value><fullName>Amount Mismatch</fullName><default>false</default><label>Amount Mismatch</label></value>
+            <value><fullName>Human Review Required</fullName><default>true</default><label>Human Review Required</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

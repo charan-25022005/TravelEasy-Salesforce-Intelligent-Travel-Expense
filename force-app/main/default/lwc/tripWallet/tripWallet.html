@@ -1,0 +1,226 @@
+<template>
+    <lightning-card title="Trip Wallet &amp; Spend Tracker" icon-name="standard:budget">
+        <div slot="actions">
+            <lightning-button label="Add Expense" variant="brand" icon-name="utility:add" onclick={handleOpenModal}></lightning-button>
+            <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" onclick={handleRefresh} class="slds-m-left_xx-small"></lightning-button-icon>
+        </div>
+
+        <div class="slds-p-around_medium">
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading Trip Wallet"></lightning-spinner>
+            </template>
+
+            <!-- Wallet Metrics Summary -->
+            <template if:true={walletData}>
+                <!-- Exception Banner if open exceptions exist -->
+                <template if:true={hasExceptions}>
+                    <div class="slds-notify slds-notify_alert slds-alert_warning slds-m-bottom_medium slds-box_radius" role="alert">
+                        <span class="slds-assistive-text">Warning</span>
+                        <lightning-icon icon-name="utility:warning" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                        <h2>
+                            <strong>Attention:</strong> {walletData.openExceptionCount} Smart Expense Control policy exception(s) require human review.
+                        </h2>
+                    </div>
+                </template>
+
+                <!-- Metric Tiles Grid -->
+                <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                        <div class="metric-card slds-box slds-theme_default">
+                            <div class="metric-label">Approved Budget</div>
+                            <div class="metric-value slds-text-color_success">₹{walletData.estimatedCost}</div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                        <div class="metric-card slds-box slds-theme_default">
+                            <div class="metric-label">Actual Spent</div>
+                            <div class="metric-value">₹{walletData.actualSpent}</div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                        <div class="metric-card slds-box slds-theme_default">
+                            <div class="metric-label">Remaining Budget</div>
+                            <div class="metric-value slds-text-color_weak">₹{walletData.remainingBudget}</div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                        <div class="metric-card slds-box slds-theme_default">
+                            <div class="metric-label">Budget Utilization</div>
+                            <div class="metric-value">{walletData.utilizationPercent}%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="slds-m-bottom_large">
+                    <div class="slds-grid slds-grid_align-spread slds-m-bottom_xx-small">
+                        <span class="slds-text-title_bold">Spend Consumption</span>
+                        <span class="slds-text-body_small">{walletData.utilizationPercent}% of estimated limit</span>
+                    </div>
+                    <lightning-progress-bar value={walletData.utilizationPercent} size="large" variant={progressBarVariant}></lightning-progress-bar>
+                </div>
+
+                <!-- Spend Breakdown by Category -->
+                <template if:true={walletData.categoryBreakdown.length}>
+                    <div class="slds-m-bottom_medium">
+                        <h3 class="slds-text-title_bold slds-m-bottom_small">Spend Breakdown by Category</h3>
+                        <div class="slds-grid slds-wrap slds-gutters_x-small">
+                            <template for:each={walletData.categoryBreakdown} for:item="cat">
+                                <div key={cat.category} class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4 slds-m-bottom_x-small">
+                                    <div class="slds-badge slds-badge_lightest category-pill">
+                                        <span class="slds-truncate"><strong>{cat.category}:</strong> ₹{cat.totalAmount} ({cat.itemCount} items)</span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Expense Items Datatable -->
+                <div class="slds-m-top_medium">
+                    <h3 class="slds-text-title_bold slds-m-bottom_small">Expense Items ({expenseItems.length})</h3>
+                    <template if:true={expenseItems.length}>
+                        <div class="slds-scrollable_x">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th scope="col"><div class="slds-truncate">Item #</div></th>
+                                        <th scope="col"><div class="slds-truncate">Date</div></th>
+                                        <th scope="col"><div class="slds-truncate">Category</div></th>
+                                        <th scope="col"><div class="slds-truncate">Vendor</div></th>
+                                        <th scope="col"><div class="slds-truncate">Amount</div></th>
+                                        <th scope="col"><div class="slds-truncate">Validation</div></th>
+                                        <th scope="col"><div class="slds-truncate">Policy Result</div></th>
+                                        <th scope="col"><div class="slds-truncate">Receipt</div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={expenseItems} for:item="item">
+                                        <tr key={item.id} class="slds-hint-parent">
+                                            <td><div class="slds-truncate">{item.name}</div></td>
+                                            <td><div class="slds-truncate">{item.expenseDate}</div></td>
+                                            <td><div class="slds-truncate">{item.category}</div></td>
+                                            <td><div class="slds-truncate">{item.vendor}</div></td>
+                                            <td><div class="slds-truncate font-bold">₹{item.amount}</div></td>
+                                            <td>
+                                                <span class={item.validationBadgeClass}>{item.validationStatus}</span>
+                                            </td>
+                                            <td>
+                                                <span class="slds-badge">{item.policyResult}</span>
+                                                <template if:true={item.exceptionReason}>
+                                                    <lightning-helptext content={item.exceptionReason} class="slds-m-left_xx-small"></lightning-helptext>
+                                                </template>
+                                            </td>
+                                            <td>
+                                                <template if:true={item.receiptAttached}>
+                                                    <lightning-icon icon-name="utility:check" size="xx-small" variant="success"></lightning-icon> Attached
+                                                </template>
+                                                <template if:false={item.receiptAttached}>
+                                                    <span class="slds-text-color_error">Missing</span>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                    <template if:false={expenseItems.length}>
+                        <div class="slds-text-align_center slds-p-around_medium slds-text-color_weak">
+                            No expenses recorded yet. Click "Add Expense" to submit your first receipt.
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+
+    <!-- Modal: Quick Add Expense -->
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCloseModal}>
+                        <lightning-icon icon-name="utility:close" size="small" variant="inverse"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading" class="slds-modal__title slds-hyphenate">Record Trip Expense</h2>
+                    <p class="slds-m-top_x-small slds-text-color_weak">Subject to Smart Expense Control policy validation upon save.</p>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-m-bottom_small">
+                            <lightning-combobox
+                                name="category"
+                                label="Expense Category"
+                                value={formCategory}
+                                placeholder="Select Category"
+                                options={categoryOptions}
+                                onchange={handleFormChange}
+                                required>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-m-bottom_small">
+                            <lightning-input
+                                type="number"
+                                name="amount"
+                                label="Amount (INR)"
+                                formatter="currency"
+                                step="0.01"
+                                value={formAmount}
+                                onchange={handleFormChange}
+                                required>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-m-bottom_small">
+                            <lightning-input
+                                type="date"
+                                name="expenseDate"
+                                label="Expense Date"
+                                value={formExpenseDate}
+                                onchange={handleFormChange}
+                                required>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-m-bottom_small">
+                            <lightning-input
+                                type="text"
+                                name="vendor"
+                                label="Vendor / Merchant"
+                                value={formVendor}
+                                onchange={handleFormChange}
+                                placeholder="e.g. IndiGo, Lemon Tree Hotel, Uber">
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+                            <lightning-input
+                                type="text"
+                                name="description"
+                                label="Description / Business Justification"
+                                value={formDescription}
+                                onchange={handleFormChange}>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-m-top_small">
+                            <lightning-input
+                                type="checkbox"
+                                name="receiptAttached"
+                                label="Receipt is attached / available"
+                                checked={formReceiptAttached}
+                                onchange={handleFormChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleCloseModal} class="slds-m-right_x-small"></lightning-button>
+                    <lightning-button label="Submit Expense" variant="brand" onclick={handleSubmitQuickExpense}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

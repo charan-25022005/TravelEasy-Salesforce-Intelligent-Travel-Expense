@@ -1,0 +1,13 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Utilization_Percent__c</fullName>
+    <description>Percentage of approved budget consumed by actual expenses.</description>
+    <externalId>false</externalId>
+    <formula>IF(Estimated_Cost__c &gt; 0, BLANKVALUE(Actual_Total_Expense__c, 0) / Estimated_Cost__c, 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Budget Utilization %</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

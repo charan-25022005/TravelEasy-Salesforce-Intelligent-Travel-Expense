@@ -1,0 +1,39 @@
+.metric-card {
+    text-align: center;
+    border-radius: 8px;
+    background: #fbfcfd;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #54698d;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.metric-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #16325c;
+}
+
+.category-pill {
+    padding: 0.4rem 0.6rem;
+    border-radius: 12px;
+    display: block;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.font-bold {
+    font-weight: 600;
+}

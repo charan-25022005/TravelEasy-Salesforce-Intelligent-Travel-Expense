@@ -1,0 +1,11 @@
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Actual_Total_Expense__c</fullName>
+    <description>Roll-up summary of all submitted expense reports for this trip.</description>
+    <externalId>false</externalId>
+    <label>Actual Total Expense</label>
+    <summarizedField>Expense_Report__c.Total_Amount__c</summarizedField>
+    <summaryForeignKey>Expense_Report__c.Travel_Request__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>
